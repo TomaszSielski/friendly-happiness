@@ -1,2 +1,7 @@
-// main app.js for Node.js
-console.log("hello world");
+import React from "react";
+
+function App() {
+  return <h1>Hello, Friendly Happiness!</h1>;
+}
+
+export default App;
