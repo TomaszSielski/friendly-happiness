@@ -1,0 +1,29 @@
+/* /frontend/src/styles/menu.css */
+.menu {
+  padding: 1rem;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.menu-link {
+  text-decoration: none;
+  color: #333;
+}
+
+.menu-link:hover {
+  color: #005a9e;
+  text-decoration: underline;
+}
+
+.menu-link.active {
+  font-weight: bold;
+  color: #0078d4;
+  border-bottom: 2px solid #0078d4;
+}
+
+.admin-link {
+  color: #d83b01;
+  font-weight: bold;
+}

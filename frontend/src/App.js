@@ -1,47 +1,42 @@
-import React, { useState, useEffect } from "react";
+// frontend/src/App.js
+import React, { useEffect, useState } from "react";
 import { useMsal } from "@azure/msal-react";
 import Spinner from "./components/Spinner";
+import AppRoutes from "./routes/AppRoutes";
+import MainLayout from "./layout/MainLayout";
 
 function App() {
-  const { instance, accounts } = useMsal();
+  const { instance } = useMsal();
+  const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const accounts = instance.getAllAccounts();
-    setLoading(false);
+    const existingAccounts = instance.getAllAccounts();
+    setAccounts(existingAccounts);
+    setLoading(false); // Spinner delay removed for clarity
   }, [instance]);
 
-  const handleLogin = async () => {
-    try {
-      await instance.loginPopup();
-    } catch (error) {
-      if (error.errorCode === "user_cancelled") {
-        console.log("User cancelled the login.");
-      } else console.error("Login failed:", error);
-    }
-  };
-
-  const handleLogout = () => {
-    instance.logoutPopup();
-  };
-
   if (loading) {
-    return <Spinner />;
+    return (
+      <div style={{ textAlign: "center", marginTop: "100px" }}>
+        <Spinner />
+        <p>Checking your Microsoft login session…</p>
+      </div>
+    );
   }
 
-  return (
-    <div>
-      <h1>Welcome to Friendly Happiness</h1>
-      <p>Your journey to happiness starts here.</p>
-      {accounts.length > 0 ? (
-        <>
-          <h1>Welcome, {accounts[0].username}</h1>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <button onClick={handleLogin}>Login with Microsoft</button>
-      )}
-    </div>
+  const isAuthenticated = accounts.length > 0;
+  const roles =
+    isAuthenticated && accounts[0].idTokenClaims
+      ? (accounts[0].idTokenClaims.roles || []).map((r) => r.toLowerCase())
+      : [];
+
+  return isAuthenticated ? (
+    <MainLayout roles={roles}>
+      <AppRoutes roles={roles} />
+    </MainLayout>
+  ) : (
+    <AppRoutes roles={[]} />
   );
 }
 
