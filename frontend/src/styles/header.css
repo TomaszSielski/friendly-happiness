@@ -1,0 +1,62 @@
+/* Base header styling */
+.app-header {
+  padding: 1rem;
+  background-color: #f0f0f0;
+}
+
+/* Flex container for title + hamburger */
+.header-content {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on narrow screens */
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Ensure title takes full width when wrapping */
+.header-content h1 {
+  flex: 1 1 100%;
+  margin: 0;
+}
+
+/* Hamburger button (hidden on desktop) */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+}
+
+/* Menu layout */
+.menu {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  background-color: #f0f0f0;
+  flex-wrap: wrap;
+}
+
+/* Responsive breakpoint */
+@media (max-width: 768px) {
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .menu.open {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+}

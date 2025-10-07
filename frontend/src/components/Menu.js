@@ -1,18 +1,24 @@
 // frontend/src/components/Menu.js
-import React from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/menu.css";
+import { devLog } from "../utils/logger";
 
-const Menu = ({ roles }) => {
+const Menu = ({ roles = [], isOpen = true }) => {
+  devLog("debug", "[Menu] Roles received:", roles);
+  devLog("debug", "[Menu] isOpen state:", isOpen);
+
   const normalizedRoles = roles.map((r) => r.toLowerCase());
   const hasRole = (role) => normalizedRoles.includes(role);
 
   return (
-    <nav className="menu">
+    <nav className={`menu ${isOpen ? "open" : ""}`}>
       {roles.length === 0 && (
-        <NavLink to="/" className="menu-link">
-          Home
-        </NavLink>
+        <>
+          <NavLink to="/" className="menu-link">
+            Home
+          </NavLink>
+          <p className="menu-note">No roles detected</p>
+        </>
       )}
 
       {(hasRole("users") || hasRole("admins")) && (

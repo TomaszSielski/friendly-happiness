@@ -1,5 +1,7 @@
 // frontend/src/App.js
+
 import React, { useEffect, useState } from "react";
+import { devLog } from "./utils/logger";
 import { useMsal } from "@azure/msal-react";
 import Spinner from "./components/Spinner";
 import AppRoutes from "./routes/AppRoutes";
@@ -13,7 +15,16 @@ function App() {
   useEffect(() => {
     const existingAccounts = instance.getAllAccounts();
     setAccounts(existingAccounts);
-    setLoading(false); // Spinner delay removed for clarity
+
+    const extractedRoles =
+      existingAccounts.length > 0 && existingAccounts[0].idTokenClaims
+        ? existingAccounts[0].idTokenClaims.roles || []
+        : [];
+
+    devLog("debug", "[App] Accounts found:", existingAccounts);
+    devLog("debug", "[App] Roles extracted:", extractedRoles);
+
+    setLoading(false);
   }, [instance]);
 
   if (loading) {

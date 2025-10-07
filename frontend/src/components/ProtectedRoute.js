@@ -1,6 +1,7 @@
-import React from "react";
+// src/components/ProtectedRoute.js
 import { useMsal } from "@azure/msal-react";
 import { Navigate } from "react-router-dom";
+import { devLog } from "../utils/logger";
 
 const ProtectedRoute = ({ children, requiredRoles }) => {
   const { instance } = useMsal();
@@ -19,7 +20,14 @@ const ProtectedRoute = ({ children, requiredRoles }) => {
     normalizedRequiredRoles.length === 0 ||
     normalizedRequiredRoles.some((role) => roles.includes(role));
 
+  devLog("info", "[ProtectedRoute] Checking access for protected route.");
+  devLog("debug", "[ProtectedRoute] Authenticated:", isAuthenticated);
+  devLog("debug", "[ProtectedRoute] User roles:", roles);
+  devLog("debug", "[ProtectedRoute] Required roles:", normalizedRequiredRoles);
+  devLog("debug", "[ProtectedRoute] Access granted:", hasAccess);
+
   if (!isAuthenticated || !hasAccess) {
+    devLog("warn", "[ProtectedRoute] Access denied. Redirecting to home.");
     return <Navigate to="/" replace />;
   }
 

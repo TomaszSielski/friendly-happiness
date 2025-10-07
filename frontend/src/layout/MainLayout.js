@@ -1,36 +1,28 @@
 // frontend/src/layout/MainLayout.js
-import React from "react";
 import { useMsal } from "@azure/msal-react";
-import Menu from "../components/Menu";
+import { devLog } from "../utils/logger";
 import Header from "../components/Header";
-import LogoutButton from "../components/LogoutButton";
+import "../styles/mainLayout.css";
 
 const MainLayout = ({ roles, children }) => {
   const { instance } = useMsal();
   const accounts = instance.getAllAccounts();
   const account = accounts.length > 0 ? accounts[0] : null;
   const displayName = account?.name || account?.username || "User";
+  if (!account) {
+    devLog("warn", "[MainLayout] No MSAL account detected.");
+  }
+  devLog("info", "[MainLayout] Rendering layout for authenticated user.");
+  devLog("debug", "[MainLayout] Display name:", displayName);
+  devLog("debug", "[MainLayout] Roles passed to layout:", roles);
+  devLog("debug", "[MainLayout] MSAL account object:", account);
 
-  //const displayName = account?.name || "User";
-  //const username = account?.username || "User";
   return (
     <>
-      <Header />
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "0 20px",
-          gap: "10px",
-        }}
-      >
-        <Menu roles={roles} />
+      <Header roles={roles} />
+      <div className="layout-meta">
         <span>Welcome, {displayName}</span>
-        <p style={{ fontSize: "0.85em", color: "#666" }}>
-          Roles: {roles.join(", ") || "None"}
-        </p>
+        <p>Roles: {roles.join(", ") || "None"}</p>
       </div>
       <main>{children}</main>
     </>

@@ -1,12 +1,12 @@
 // src/components/LogoutButton.js
-import React from "react";
+// not used - to be deleted
 import { useMsal } from "@azure/msal-react";
 
 const LogoutButton = () => {
   const { instance } = useMsal();
 
   const handleLogout = () => {
-    instance.logoutRedirect(); // or logoutPopup()
+    instance.logoutRedirect();
   };
 
   return <button onClick={handleLogout}>Logout</button>;
