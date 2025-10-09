@@ -1,4 +1,12 @@
 /* src/styles/mainLayout.css */
+.layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(to right, #1a1a1a, #000000);
+  color: #958d63;
+  font-family: "Montserrat", sans-serif;
+}
 
 .layout-meta {
   display: flex;
@@ -9,12 +17,13 @@
   gap: 10px;
 }
 
-.layout-meta span {
+.layout-meta span,
+.layout-meta p {
   font-size: 1rem;
-  color: #333;
+  color: inherit;
 }
 
-.layout-meta p {
-  font-size: 0.85em;
-  color: #666;
+.layout-content {
+  flex: 1;
+  padding: 1rem 20px;
 }

@@ -1,0 +1,22 @@
+/* src/styles/buttons.css */
+button {
+  background-color: transparent;
+  color: #958d63;
+  border: 1px solid #958d63;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #958d63;
+  color: #000000;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

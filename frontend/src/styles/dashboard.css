@@ -1,0 +1,17 @@
+.claims {
+  background-color: #111;
+  color: #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.claims ul {
+  list-style: none;
+  padding: 0;
+}
+
+.claims li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}

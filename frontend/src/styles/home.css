@@ -1,0 +1,58 @@
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #1a1a1a, #000000);
+  color: #958d63;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  padding: 2rem;
+}
+
+.home-content h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.home-content h1 span {
+  color: #ffd700;
+}
+
+.home-content p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.login-button {
+  background-color: transparent;
+  color: #958d63;
+  border: 1px solid #958d63;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #958d63;
+  color: #000000;
+}
+
+.home-footer {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+.home-logo {
+  height: 60px;
+  width: auto;
+  margin-bottom: 1rem;
+}
+@media (max-width: 768px) {
+  .home-logo {
+    height: 48px;
+  }
+}
