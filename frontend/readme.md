@@ -18,26 +18,26 @@ A responsive, role-based React application with Microsoft authentication, granul
 ---
 
 ## 🗂️ Project Structure
-
+<pre>
 frontend/
 ├── public/
-│ ├── index.html
-│ └── favicon.ico
+│   ├── index.html
+│   └── favicon.ico
 ├── src/
-│ ├── assets/
-│ ├── auth/
-│ ├── components/
-│ ├── layout/
-│ ├── pages/
-│ ├── routes/
-│ ├── styles/
-│ ├── utils/
-│ ├── App.js
-│ └── index.js
+│   ├── assets/
+│   ├── auth/
+│   ├── components/
+│   ├── layout/
+│   ├── pages/
+│   ├── routes/
+│   ├── styles/
+│   ├── utils/
+│   ├── App.js
+│   └── index.js
 ├── .env
 ├── package.json
 └── readme.md
-
+</pre>
 ---
 
 ## 🧪 Development Notes
