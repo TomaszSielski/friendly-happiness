@@ -9,7 +9,7 @@ A responsive, role-based React application with Microsoft authentication, granul
 - 🔐 **MSAL Authentication** — Secure login/logout via Microsoft Identity Platform
 - 🧑‍💼 **Role-Based Access Control** — Protected routes with dynamic role checks
 - 📋 **Granular Logging** — Timestamped, level-aware logs across layout, routing, and auth flows
-- 📱 **Responsive Design** — Mobile-first layout with adaptive header/menu
+- 📱 **Responsive Design** — Mobile-first layout with adaptive header/menu and auto-closing navigation
 - 🧱 **Modular Components** — Clean separation of layout, header, menu, and protected views
 - 🐛 **Error-Resilient** — Defensive coding with fallback logic and audit-friendly traceability
 - 🧠 **Token Claim Viewer** — Decodes and displays identity claims from MSAL tokens
@@ -24,14 +24,14 @@ frontend/
 │ ├── index.html
 │ └── favicon.ico
 ├── src/
-│ ├── assets/
-│ ├── auth/
-│ ├── components/
-│ ├── layout/
-│ ├── pages/
-│ ├── routes/
-│ ├── styles/
-│ ├── utils/
+│ ├── assets/ # Static assets (logo, icons)
+│ ├── auth/ # MSAL config and logout logic
+│ ├── components/ # Header, Menu, ProtectedRoute
+│ ├── layout/ # MainLayout wrapper
+│ ├── pages/ # Dashboard, Profile, Admin
+│ ├── routes/ # Route definitions
+│ ├── styles/ # CSS modules
+│ ├── utils/ # Logger, helpers
 │ ├── App.js
 │ └── index.js
 ├── .env
@@ -42,11 +42,13 @@ frontend/
 
 ## 🧪 Development Notes
 
-- ✅ MSAL token claims are decoded and rendered in `Dashboard.js`
+- ✅ MSAL token claims are decoded and summarized in `Dashboard.js`
+- ✅ Full claim viewer lives in `Profile.js` with collapsible formatting
 - ✅ Role-based routing handled via `ProtectedRoute.js`
-- ✅ Header and menu are responsive and role-aware
 - ✅ Logging is centralized via `logger.js` with level and timestamp support
 - ✅ Layout is modular and semantic: `MainLayout.js` wraps all views
+- ✅ Header menu auto-closes on mobile after navigation
+- ✅ Responsive styles scoped to `dashboard.css`, `profile.css`, and `mainLayout.css`
 
 ---
 
@@ -57,3 +59,16 @@ npm install
 npm start
 
 ```
+
+📝 TODO
+[ ] 🔄 Implement Just-in-Time Scope Elevation
+
+Start with minimal scopes at login (e.g., User.Read)
+
+Detect role claims (roles, groups) from token
+
+Elevate scopes dynamically via acquireTokenSilent or Popup when privileged actions are triggered
+
+Ensure audit logging for elevated access attempts
+
+Gracefully handle consent prompts and fallback logic

@@ -27,3 +27,24 @@
   flex: 1;
   padding: 1rem 20px;
 }
+@media (max-width: 600px) {
+  .layout-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 1rem;
+    gap: 0.5rem;
+  }
+
+  .layout-meta span,
+  .layout-meta p {
+    font-size: 0.9rem;
+  }
+
+  .layout-content {
+    padding: 1rem;
+  }
+
+  .layout-wrapper {
+    font-size: 0.95rem;
+  }
+}

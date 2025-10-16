@@ -1,3 +1,4 @@
+/* Dashboard Styles */
 .claims {
   background-color: #111;
   color: #ccc;
@@ -14,4 +15,51 @@
 .claims li {
   margin-bottom: 0.5rem;
   font-size: 0.9rem;
+}
+/* Badge container for roles/groups */
+.claim-badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 4px;
+}
+
+/* Individual badge styling */
+.claim-badge {
+  background-color: #333;
+  color: #eee;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #555;
+}
+.claim-badge:hover {
+  background-color: #555;
+  cursor: default;
+}
+.claim-badge {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.claim-toggle {
+  background: none;
+  border: none;
+  color: #66f;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+  margin-left: 4px;
+}
+.claim-summary {
+  background-color: #222;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #ddd;
+}
+
+.claim-summary p {
+  margin: 0.25rem 0;
+  word-break: break-word;
 }

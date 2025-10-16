@@ -1,0 +1,101 @@
+/* Profile Page Styles */
+.profile {
+  padding: 1rem;
+}
+
+.profile h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.profile .claims {
+  background-color: #111;
+  color: #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.profile .claims ul {
+  list-style: none;
+  padding: 0;
+}
+
+.profile .claims li {
+  overflow-wrap: anywhere;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+.profile .claim-badge-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 4px;
+  max-width: 100%;
+}
+
+.profile .claim-badge {
+  background-color: #333;
+  color: #eee;
+  border-radius: 12px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid #555;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.profile .claim-badge:hover {
+  background-color: #555;
+  cursor: default;
+}
+
+.profile .claim-toggle {
+  background: none;
+  border: none;
+  color: #66f;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  margin-left: 4px;
+}
+
+@media (max-width: 600px) {
+  .profile {
+    padding: 1rem;
+  }
+
+  .profile .claims {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .profile .claims li {
+    font-size: 0.8rem;
+  }
+
+  .profile .claim-badge {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+  }
+
+  .profile .claim-toggle {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+  }
+
+  .profile h2 {
+    font-size: 1.4rem;
+  }
+
+  .profile p {
+    font-size: 0.9rem;
+  }
+}

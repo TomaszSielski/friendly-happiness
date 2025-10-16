@@ -2,11 +2,18 @@
 import { useMsal } from "@azure/msal-react";
 import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import { useEffect, useState } from "react";
+import "../styles/dashboard.css";
+import { devLog } from "../utils/logger";
 
 const Dashboard = () => {
   const { instance } = useMsal();
   const [claims, setClaims] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const formatTimestamp = (value) => {
+    const date = new Date(value * 1000);
+    return `${date.toLocaleString()} (${date.toDateString()})`;
+  };
 
   useEffect(() => {
     const extractClaims = async () => {
@@ -14,7 +21,7 @@ const Dashboard = () => {
       const account = accounts.length > 0 ? accounts[0] : null;
 
       if (!account) {
-        console.warn("No account found for token acquisition.");
+        devLog("warn", "[Dashboard] No account found for token acquisition.");
         setLoading(false);
         return;
       }
@@ -24,7 +31,19 @@ const Dashboard = () => {
           account,
           scopes: ["User.Read"],
         });
-        const decoded = parseJwt(response.idToken);
+        const decoded = JSON.parse(
+          atob(
+            response.idToken.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")
+          )
+        );
+        devLog("info", "[Dashboard] Claims loaded:", decoded);
+        if (decoded?.exp) {
+          devLog(
+            "info",
+            "[Dashboard] Token expires at:",
+            formatTimestamp(decoded.exp)
+          );
+        }
         setClaims(decoded);
       } catch (error) {
         if (error instanceof InteractionRequiredAuthError) {
@@ -33,13 +52,36 @@ const Dashboard = () => {
               account,
               scopes: ["User.Read"],
             });
-            const decoded = parseJwt(response.idToken);
+            const decoded = JSON.parse(
+              atob(
+                response.idToken
+                  .split(".")[1]
+                  .replace(/-/g, "+")
+                  .replace(/_/g, "/")
+              )
+            );
+            devLog("info", "[Dashboard] Claims loaded (popup):", decoded);
+            if (decoded?.exp) {
+              devLog(
+                "info",
+                "[Dashboard] Token expires at (popup):",
+                formatTimestamp(decoded.exp)
+              );
+            }
             setClaims(decoded);
           } catch (popupError) {
-            console.error("Popup token acquisition failed:", popupError);
+            devLog(
+              "error",
+              "[Dashboard] Popup token acquisition failed:",
+              popupError
+            );
           }
         } else {
-          console.error("Silent token acquisition failed:", error);
+          devLog(
+            "error",
+            "[Dashboard] Silent token acquisition failed:",
+            error
+          );
         }
       } finally {
         setLoading(false);
@@ -49,16 +91,15 @@ const Dashboard = () => {
     extractClaims();
   }, [instance]);
 
-  const parseJwt = (token) => {
-    try {
-      const base64 = token.split(".")[1];
-      const json = atob(base64.replace(/-/g, "+").replace(/_/g, "/"));
-      return JSON.parse(json);
-    } catch (e) {
-      console.error("Failed to parse JWT:", e);
-      return null;
-    }
-  };
+  const renderBadges = (items) => (
+    <div className="claim-badge-group">
+      {items.map((item, index) => (
+        <span key={index} className="claim-badge">
+          {item}
+        </span>
+      ))}
+    </div>
+  );
 
   return (
     <div className="dashboard">
@@ -68,20 +109,19 @@ const Dashboard = () => {
       {loading && <p>Loading token claims...</p>}
 
       {!loading && claims && (
-        <div className="claims">
-          <h3>Token Claims</h3>
-          <ul>
-            {Object.entries(claims).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key}:</strong>{" "}
-                {typeof value === "object" ? (
-                  <pre>{JSON.stringify(value, null, 2)}</pre>
-                ) : (
-                  value.toString()
-                )}
-              </li>
-            ))}
-          </ul>
+        <div className="claim-summary">
+          <p>
+            <strong>Username:</strong>{" "}
+            {claims.preferred_username || claims.name || "—"}
+          </p>
+          <p>
+            <strong>Roles:</strong>{" "}
+            {claims.roles ? renderBadges(claims.roles) : "None"}
+          </p>
+          <p>
+            <strong>Token Expires:</strong>{" "}
+            {claims.exp ? formatTimestamp(claims.exp) : "—"}
+          </p>
         </div>
       )}
     </div>
