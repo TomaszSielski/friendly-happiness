@@ -1,6 +1,8 @@
 /* Profile Page Styles */
 .profile {
-  padding: 1rem;
+  padding: var(--spacing-unit, 1rem);
+  font-family: var(--font-family);
+  color: var(--main-text);
 }
 
 .profile h2 {
@@ -10,15 +12,15 @@
 
 .profile p {
   font-size: 0.95rem;
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-unit, 1rem);
 }
 
 .profile .claims {
-  background-color: #111;
-  color: #ccc;
-  padding: 1rem;
+  background-color: var(--main-bg);
+  color: var(--main-text);
+  padding: var(--spacing-unit, 1rem);
   border-radius: 8px;
-  margin-top: 1rem;
+  margin-top: var(--spacing-unit, 1rem);
 }
 
 .profile .claims ul {
@@ -60,7 +62,7 @@
 .profile .claim-toggle {
   background: none;
   border: none;
-  color: #66f;
+  color: var(--accent);
   cursor: pointer;
   font-size: 0.85rem;
   padding: 4px 8px;
@@ -69,7 +71,7 @@
 
 @media (max-width: 600px) {
   .profile {
-    padding: 1rem;
+    padding: var(--spacing-unit, 1rem);
   }
 
   .profile .claims {

@@ -3,9 +3,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: linear-gradient(to right, #1a1a1a, #000000);
-  color: #958d63;
-  font-family: "Montserrat", sans-serif;
+  background: var(--main-bg);
+  color: var(--main-text);
+  font-family: var(--font-family);
 }
 
 .layout-meta {
@@ -13,7 +13,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
+  padding: 0 var(--spacing-unit, 20px);
   gap: 10px;
 }
 
@@ -25,8 +25,9 @@
 
 .layout-content {
   flex: 1;
-  padding: 1rem 20px;
+  padding: var(--spacing-unit, 1rem) 20px;
 }
+
 @media (max-width: 600px) {
   .layout-meta {
     flex-direction: column;

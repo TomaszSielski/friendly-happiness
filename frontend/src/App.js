@@ -3,9 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { devLog } from "./utils/logger";
 import { useMsal } from "@azure/msal-react";
-import Spinner from "./components/Spinner";
 import AppRoutes from "./routes/AppRoutes";
+
+import "./styles/global.css";
+import "./styles/mainLayout.css";
 import MainLayout from "./layout/MainLayout";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   const { instance } = useMsal();
@@ -28,12 +31,7 @@ function App() {
   }, [instance]);
 
   if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "100px" }}>
-        <Spinner />
-        <p>Checking your Microsoft login session…</p>
-      </div>
-    );
+    return <LoadingScreen message="Checking your Microsoft login session…" />;
   }
 
   const isAuthenticated = accounts.length > 0;

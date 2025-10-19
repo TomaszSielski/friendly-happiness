@@ -1,8 +1,10 @@
 /* src/styles/header.css */
 .app-header {
-  background-color: #000;
+  background-color: var(--main-bg);
   padding: 0.75rem 1.5rem;
   border-bottom: 1px solid #333;
+  font-family: var(--font-family);
+  color: var(--header-text);
 }
 
 .header-content {
@@ -21,7 +23,7 @@
 .header-content h1 {
   margin: 0;
   font-size: 1.8rem;
-  color: #5a5330;
+  color: var(--main-text);
 }
 
 .hamburger {
@@ -29,7 +31,7 @@
   font-size: 1.8rem;
   background: none;
   border: none;
-  color: #5a5330;
+  color: var(--main-text);
   cursor: pointer;
 }
 
@@ -43,23 +45,23 @@
 
 .nav-button {
   background-color: transparent;
-  color: #958d63;
-  border: 1px solid #958d63;
+  color: var(--main-text);
+  border: 1px solid var(--main-text);
   padding: 0.6rem 1.2rem;
-  border-radius: 6px; /* slightly squared */
+  border-radius: 6px;
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
 
 .nav-button:hover {
-  background-color: #958d63;
-  color: #000;
+  background-color: var(--main-text);
+  color: var(--main-bg);
 }
 
 .nav-button.active {
-  background-color: #ffd700;
-  color: #000;
+  background-color: var(--highlight, #ffd700);
+  color: var(--main-bg);
 }
 
 /* Mobile */

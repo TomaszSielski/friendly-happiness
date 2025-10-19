@@ -114,10 +114,12 @@ const Dashboard = () => {
             <strong>Username:</strong>{" "}
             {claims.preferred_username || claims.name || "—"}
           </p>
+
           <p>
-            <strong>Roles:</strong>{" "}
-            {claims.roles ? renderBadges(claims.roles) : "None"}
+            <strong>Roles:</strong>
           </p>
+          {claims.roles ? renderBadges(claims.roles) : <p>None</p>}
+
           <p>
             <strong>Token Expires:</strong>{" "}
             {claims.exp ? formatTimestamp(claims.exp) : "—"}

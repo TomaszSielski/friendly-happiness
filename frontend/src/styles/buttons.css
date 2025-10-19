@@ -1,10 +1,10 @@
 /* src/styles/buttons.css */
 button {
   background-color: transparent;
-  color: #958d63;
-  border: 1px solid #958d63;
+  color: var(--main-text);
+  border: 1px solid var(--main-text);
   padding: 0.5rem 1rem;
-  font-family: inherit;
+  font-family: var(--font-family);
   font-size: 1rem;
   border-radius: 4px;
   cursor: pointer;
@@ -12,8 +12,8 @@ button {
 }
 
 button:hover {
-  background-color: #958d63;
-  color: #000000;
+  background-color: var(--main-text);
+  color: var(--main-bg);
 }
 
 button:disabled {

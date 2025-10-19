@@ -2,7 +2,7 @@
 @media (max-width: 768px) {
   .menu {
     flex-direction: column;
-    padding: 0.5rem;
+    padding: var(--spacing-unit, 0.5rem);
   }
 
   .menu-link {
@@ -10,34 +10,38 @@
     padding: 0.5rem 0;
   }
 }
+
 .menu {
-  padding: 1rem;
-  background-color: #f0f0f0;
+  padding: var(--spacing-unit, 1rem);
+  background-color: var(--main-bg);
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  font-family: var(--font-family);
+  color: var(--main-text);
 }
 
 .menu-link {
   text-decoration: none;
-  color: #333;
+  color: var(--main-text);
 }
 
 .menu-link:hover {
-  color: #005a9e;
+  color: var(--accent);
   text-decoration: underline;
 }
 
 .menu-link.active {
   font-weight: bold;
-  color: #0078d4;
-  border-bottom: 2px solid #0078d4;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
 }
 
 .admin-link {
   color: #d83b01;
   font-weight: bold;
 }
+
 .menu-note {
   font-style: italic;
   color: #999;

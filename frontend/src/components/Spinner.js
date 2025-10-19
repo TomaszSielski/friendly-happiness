@@ -1,3 +1,4 @@
+/*/frontend/src/components/Spinner.js */
 import "../styles/Spinner.css";
 
 const Spinner = () => {

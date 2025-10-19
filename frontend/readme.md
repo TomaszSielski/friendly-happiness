@@ -74,3 +74,7 @@ Elevate scopes dynamically via acquireTokenSilent or Popup when privileged actio
 Ensure audit logging for elevated access attempts
 
 Gracefully handle consent prompts and fallback logic
+
+[ ] Add dark/light mode toggle to settings menu
+Default to browser preference via `prefers-color-scheme`
+Allow manual override via `data-theme` attribute

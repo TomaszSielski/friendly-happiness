@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import { MsalProvider } from "@azure/msal-react";
 import App from "./App";
 import { initializeMsal } from "./auth/authProvider";
+import { devLog } from "./utils/logger";
 
 const startApp = async () => {
   const msalInstance = await initializeMsal();
@@ -12,10 +13,10 @@ const startApp = async () => {
   try {
     const redirectResult = await msalInstance.handleRedirectPromise();
     if (redirectResult) {
-      console.log("Login successful:", redirectResult.account);
+      devLog("info", "Login successful:", redirectResult.account);
     }
   } catch (error) {
-    console.error("MSAL redirect error:", error);
+    devLog("error", "MSAL redirect error:", error);
   }
 
   const root = ReactDOM.createRoot(document.getElementById("root"));
