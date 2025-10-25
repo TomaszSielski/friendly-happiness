@@ -27,3 +27,4 @@ Thumbs.db
 
 # Optional: VSCode settings
 .vscode/
+/backend/scripts/var
