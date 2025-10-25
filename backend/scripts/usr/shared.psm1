@@ -39,7 +39,6 @@ function Test-ScriptsStructure {
         [switch]$ShowMissing
     )
 
-    $sep = if ($IsLinux) { '/' } else { '\' }
 
     $results = [ordered]@{}
     foreach ($key in $StructureMap.Keys) {
@@ -50,7 +49,7 @@ function Test-ScriptsStructure {
     if ($ShowMissing) {
         $missing = ($results.GetEnumerator() | Where-Object { $_.Value -eq $false }).Name
         if ($missing.Count -gt 0) {
-            Write-Host "`nMissing components:`n$($missing -join "`n")"
+            Write-Output "`nMissing components:`n$($missing -join "`n")"
         }
     }
 
@@ -84,6 +83,8 @@ function Get-AutoStructureMap {
     Author: Tomasz Sielski
     Version: 1.0
     #>
+    [OutputType([System.Collections.Hashtable])]
+
     [CmdletBinding()]
     param (
         [Parameter(Mandatory)]
