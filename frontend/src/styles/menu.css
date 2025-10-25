@@ -1,0 +1,48 @@
+/* /frontend/src/styles/menu.css */
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column;
+    padding: var(--spacing-unit, 0.5rem);
+  }
+
+  .menu-link {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+}
+
+.menu {
+  padding: var(--spacing-unit, 1rem);
+  background-color: var(--main-bg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: var(--font-family);
+  color: var(--main-text);
+}
+
+.menu-link {
+  text-decoration: none;
+  color: var(--main-text);
+}
+
+.menu-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.menu-link.active {
+  font-weight: bold;
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.admin-link {
+  color: #d83b01;
+  font-weight: bold;
+}
+
+.menu-note {
+  font-style: italic;
+  color: #999;
+}

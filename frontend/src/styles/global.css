@@ -1,0 +1,33 @@
+/* styles/global.css */
+/* Global Styles with Light and Dark Mode Support */
+
+:root {
+  --main-bg: linear-gradient(to right, #f0f0f0, #ffffff);
+  --main-text: #1a1a1a;
+  --accent: #0078d4;
+  --hover-text: #000000;
+  --header-text: #1a1a1a;
+  --active-text: #000000;
+  --font-family: "Montserrat", sans-serif;
+}
+
+/* Light mode override (optional for clarity) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --main-bg: linear-gradient(to right, #f0f0f0, #ffffff);
+    --main-text: #1a1a1a;
+    --accent: #0078d4;
+  }
+}
+
+/* Dark mode override */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-bg: linear-gradient(to right, #1a1a1a, #000000);
+    --main-text: #e0dcb3;
+    --accent: #ffd700;
+    --hover-text: #ffffff;
+    --header-text: #000000;
+    --active-text: #ffffff;
+  }
+}

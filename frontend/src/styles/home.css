@@ -1,0 +1,67 @@
+/* Home Page Styles */
+.home-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--main-bg);
+  color: var(--main-text);
+  font-family: var(--font-family);
+  text-align: center;
+  padding: var(--spacing-unit, 2rem);
+}
+
+@media (prefers-color-scheme: dark) {
+  .home-wrapper {
+    background: linear-gradient(to right, #1a1a1a, #000000);
+  }
+}
+
+.home-content h1 {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-unit, 1rem);
+}
+
+.home-content h1 span {
+  color: #ffd700;
+}
+
+.home-content p {
+  font-size: 1rem;
+  margin-bottom: var(--spacing-unit, 1rem);
+}
+
+.login-button {
+  background-color: transparent;
+  color: var(--hover-text);
+  border: 1px solid var(--main-text);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: var(--main-text);
+  color: var(--header-text);
+}
+
+.home-footer {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.home-logo {
+  height: 60px;
+  width: auto;
+  margin-bottom: var(--spacing-unit, 1rem);
+}
+
+@media (max-width: 768px) {
+  .home-logo {
+    height: 48px;
+  }
+}

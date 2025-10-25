@@ -1,17 +1,27 @@
+/* Spinner.css */
 .spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: var(--main-bg);
 }
 
 .spinner {
   width: 50px;
   height: 50px;
-  border: 6px solid #ccc;
-  border-top: 6px solid #0078d4;
+  border: 6px solid #333;
+  border-top: 6px solid var(--main-text);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+}
+
+.spinner-message {
+  text-align: center;
+  margin-top: 1rem;
+  color: var(--main-text);
+  font-size: 1rem;
+  font-family: var(--font-family);
 }
 
 @keyframes spin {

@@ -1,5 +1,6 @@
-import React from "react";
-import "./Spinner.css";
+/*/frontend/src/components/Spinner.js */
+import React from 'react';
+import "../styles/Spinner.css";
 
 const Spinner = () => {
   return (

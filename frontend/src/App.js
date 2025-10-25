@@ -1,47 +1,51 @@
-import React, { useState, useEffect } from "react";
+// frontend/src/App.js
+
+import React, { useEffect, useState } from "react";
+import { devLog } from "./utils/logger";
 import { useMsal } from "@azure/msal-react";
-import Spinner from "./components/Spinner";
+import AppRoutes from "./routes/AppRoutes";
+
+import "./styles/global.css";
+import "./styles/mainLayout.css";
+import MainLayout from "./layout/MainLayout";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
-  const { instance, accounts } = useMsal();
+  const { instance } = useMsal();
+  const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const accounts = instance.getAllAccounts();
+    const existingAccounts = instance.getAllAccounts();
+    setAccounts(existingAccounts);
+
+    const extractedRoles =
+      existingAccounts.length > 0 && existingAccounts[0].idTokenClaims
+        ? existingAccounts[0].idTokenClaims.roles || []
+        : [];
+
+    devLog("debug", "[App] Accounts found:", existingAccounts);
+    devLog("debug", "[App] Roles extracted:", extractedRoles);
+
     setLoading(false);
   }, [instance]);
 
-  const handleLogin = async () => {
-    try {
-      await instance.loginPopup();
-    } catch (error) {
-      if (error.errorCode === "user_cancelled") {
-        console.log("User cancelled the login.");
-      } else console.error("Login failed:", error);
-    }
-  };
-
-  const handleLogout = () => {
-    instance.logoutPopup();
-  };
-
   if (loading) {
-    return <Spinner />;
+    return <LoadingScreen message="Checking your Microsoft login session…" />;
   }
 
-  return (
-    <div>
-      <h1>Welcome to Friendly Happiness</h1>
-      <p>Your journey to happiness starts here.</p>
-      {accounts.length > 0 ? (
-        <>
-          <h1>Welcome, {accounts[0].username}</h1>
-          <button onClick={handleLogout}>Logout</button>
-        </>
-      ) : (
-        <button onClick={handleLogin}>Login with Microsoft</button>
-      )}
-    </div>
+  const isAuthenticated = accounts.length > 0;
+  const roles =
+    isAuthenticated && accounts[0].idTokenClaims
+      ? (accounts[0].idTokenClaims.roles || []).map((r) => r.toLowerCase())
+      : [];
+
+  return isAuthenticated ? (
+    <MainLayout roles={roles}>
+      <AppRoutes roles={roles} />
+    </MainLayout>
+  ) : (
+    <AppRoutes roles={[]} />
   );
 }
 

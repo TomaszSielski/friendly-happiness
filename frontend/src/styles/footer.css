@@ -1,0 +1,10 @@
+/* Footer Styles */
+.app-footer {
+  padding: var(--spacing-unit, 1rem) 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--note-text, #666);
+  background: transparent;
+  border-top: 1px solid var(--border-color, #333);
+  font-family: var(--font-family);
+}

@@ -1,0 +1,22 @@
+/* src/styles/buttons.css */
+button {
+  background-color: transparent;
+  color: var(--main-text);
+  border: 1px solid var(--main-text);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-family);
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--main-text);
+  color: var(--main-bg);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
