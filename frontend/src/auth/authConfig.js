@@ -1,5 +1,6 @@
 // src/auth/authConfig.js
 import { devLog } from "../utils/logger";
+
 export const msalConfig = {
   auth: {
     clientId: process.env.REACT_APP_CLIENT_ID,

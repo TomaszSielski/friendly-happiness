@@ -1,10 +1,15 @@
 // frontend/src/components/Header.js
 import { useEffect, useState } from "react";
 import { devLog } from "../utils/logger";
-
+import React from 'react';
 import "../styles/header.css";
 import logo from "../assets/logo.svg";
 import { NavLink } from "react-router-dom";
+import PropTypes from 'prop-types';
+
+Header.propTypes = {
+  roles: PropTypes.arrayOf(PropTypes.string)
+};
 
 const Header = ({ roles = [] }) => {
   const [menuOpen, setMenuOpen] = useState(false);

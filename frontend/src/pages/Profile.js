@@ -4,6 +4,9 @@ import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import { useEffect, useState } from "react";
 import "../styles/profile.css";
 import { devLog } from "../utils/logger";
+import React from 'react';
+import PropTypes from 'prop-types';
+
 
 const timestampsKeys = ["iat", "exp", "nbf", "auth_time"];
 
@@ -21,6 +24,10 @@ const renderBadges = (items) => (
     ))}
   </div>
 );
+
+CollapsibleClaim.propTypes = {
+  value: PropTypes.any
+};
 
 const CollapsibleClaim = ({ value }) => {
   const [expanded, setExpanded] = useState(false);

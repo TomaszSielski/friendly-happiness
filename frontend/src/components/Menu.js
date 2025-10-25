@@ -2,6 +2,9 @@
 import { NavLink } from "react-router-dom";
 import "../styles/menu.css";
 import { devLog } from "../utils/logger";
+import React from 'react';
+import PropTypes from 'prop-types';
+
 
 const Menu = ({ roles = [], isOpen = true }) => {
   devLog("debug", "[Menu] Roles received:", roles);
@@ -46,5 +49,8 @@ const Menu = ({ roles = [], isOpen = true }) => {
     </nav>
   );
 };
-
+Menu.propTypes = {
+  isOpen: PropTypes.bool,
+  roles: PropTypes.arrayOf(PropTypes.string)
+};
 export default Menu;

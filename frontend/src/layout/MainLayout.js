@@ -4,6 +4,9 @@ import { devLog } from "../utils/logger";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/mainLayout.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+
 
 const MainLayout = ({ roles, children }) => {
   const { instance } = useMsal();
@@ -32,5 +35,8 @@ const MainLayout = ({ roles, children }) => {
     </div>
   );
 };
-
+MainLayout.propTypes = {
+  children: PropTypes.node,
+  roles: PropTypes.arrayOf(PropTypes.string)
+};
 export default MainLayout;

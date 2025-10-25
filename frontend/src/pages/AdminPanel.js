@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useMsal } from "@azure/msal-react";
 import { devLog } from "../utils/logger";
-
+import React from 'react';
 const AdminPanel = () => {
   const { instance } = useMsal();
   const accounts = instance.getAllAccounts();

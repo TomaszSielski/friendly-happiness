@@ -4,6 +4,7 @@ import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import { useEffect, useState } from "react";
 import "../styles/dashboard.css";
 import { devLog } from "../utils/logger";
+import React from 'react';
 
 const Dashboard = () => {
   const { instance } = useMsal();

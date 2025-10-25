@@ -2,6 +2,9 @@
 import { useMsal } from "@azure/msal-react";
 import { Navigate } from "react-router-dom";
 import { devLog } from "../utils/logger";
+import React from 'react';
+import PropTypes from 'prop-types';
+
 
 const ProtectedRoute = ({ children, requiredRoles }) => {
   const { instance } = useMsal();
@@ -33,5 +36,8 @@ const ProtectedRoute = ({ children, requiredRoles }) => {
 
   return children;
 };
-
+ProtectedRoute.propTypes = {
+  children: PropTypes.node,
+  requiredRoles: PropTypes.arrayOf(PropTypes.string)
+};
 export default ProtectedRoute;

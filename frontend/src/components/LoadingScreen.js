@@ -1,6 +1,8 @@
 // frontend/src/components/LoadingScreen.js
 import Spinner from "./Spinner";
 import "../styles/Spinner.css";
+import React from 'react';
+import PropTypes from 'prop-types';
 
 const LoadingScreen = ({ message = "Please wait…" }) => (
   <div className="spinner-container">
@@ -10,5 +12,9 @@ const LoadingScreen = ({ message = "Please wait…" }) => (
     </div>
   </div>
 );
+
+LoadingScreen.propTypes = {
+  message: PropTypes.string
+};
 
 export default LoadingScreen;
