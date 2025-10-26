@@ -3,8 +3,11 @@ name: CI
 on:
   push:
     branches: [develop, main]
+    paths:
+      - 'frontend/**'
   pull_request:
     branches: [develop]
+      - 'frontend/**'
 
 jobs:
   build:
