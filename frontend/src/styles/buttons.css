@@ -1,21 +1,46 @@
-/* src/styles/buttons.css */
+/**
+ * @file buttons.css
+ * @description Base button styles for layout, header, menu, and reusable components.
+ *
+ * @responsibilities
+ * - Defines consistent button appearance and interaction behavior
+ * - Applies global theme tokens for color, spacing, and typography
+ * - Supports hover and disabled states for audit clarity
+ *
+ * @tokens
+ * - Uses `--main-text`, `--main-bg`, `--font-family`, `--spacing-unit`
+ *
+ * @auditTag layout-buttons-css-v1
+ * @lastReviewed 2025-10-28
+ */
+
+/* ──────────────── Base Button ──────────────── */
 button {
+  /* Visual */
   background-color: transparent;
-  color: var(--main-text);
   border: 1px solid var(--main-text);
-  padding: 0.5rem 1rem;
+  color: var(--main-text);
+  border-radius: 4px;
+
+  /* Typography */
   font-family: var(--font-family);
   font-size: 1rem;
-  border-radius: 4px;
+
+  /* Spacing */
+  padding: 0.5rem 1rem;
+
+  /* Interaction */
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
+/* ──────────────── Hover State ──────────────── */
 button:hover {
   background-color: var(--main-text);
   color: var(--main-bg);
 }
 
+/* ──────────────── Disabled State ──────────────── */
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;

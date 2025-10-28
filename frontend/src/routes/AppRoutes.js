@@ -10,9 +10,6 @@ import NotFound from "../pages/NotFound";
 import ProtectedRoute from "../components/ProtectedRoute";
 import PropTypes from 'prop-types';
 
-AppRoutes.propTypes = {
-  roles: PropTypes.arrayOf(PropTypes.string)
-};
 const AppRoutes = ({ roles }) => {
   const isAuthenticated = roles.length > 0;
 
@@ -75,5 +72,7 @@ const AppRoutes = ({ roles }) => {
     </Routes>
   );
 };
-
+AppRoutes.propTypes = {
+  roles: PropTypes.arrayOf(PropTypes.string)
+};
 export default AppRoutes;

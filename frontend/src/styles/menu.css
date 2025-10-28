@@ -1,26 +1,37 @@
-/* /frontend/src/styles/menu.css */
-@media (max-width: 768px) {
-  .menu {
-    flex-direction: column;
-    padding: var(--spacing-unit, 0.5rem);
-  }
+/**
+ * @file menu.css
+ * @description Styles for role-aware navigation menu with responsive layout and link variants.
+ *
+ * @responsibilities
+ * - Styles menu container and navigation links
+ * - Applies global theme tokens for spacing, color, and typography
+ * - Supports mobile layout and role-specific link styling
+ *
+ * @tokens
+ * - Uses `--main-bg`, `--main-text`, `--accent`, `--font-family`, `--spacing-unit`
+ *
+ * @auditTag layout-menu-css-v1
+ * @lastReviewed 2025-10-28
+ */
 
-  .menu-link {
-    font-size: 1rem;
-    padding: 0.5rem 0;
-  }
-}
-
+/* ──────────────── Menu Container ──────────────── */
 .menu {
-  padding: var(--spacing-unit, 1rem);
-  background-color: var(--main-bg);
   display: flex;
   flex-wrap: wrap;
+
+  /* Layout */
   gap: 10px;
-  font-family: var(--font-family);
+  padding: var(--spacing-unit, 1rem);
+
+  /* Visual */
+  background-color: var(--main-bg);
   color: var(--main-text);
+
+  /* Typography */
+  font-family: var(--font-family);
 }
 
+/* ──────────────── Menu Links ──────────────── */
 .menu-link {
   text-decoration: none;
   color: var(--main-text);
@@ -37,12 +48,27 @@
   border-bottom: 2px solid var(--accent);
 }
 
+/* ──────────────── Role-Specific Link ──────────────── */
 .admin-link {
   color: #d83b01;
   font-weight: bold;
 }
 
+/* ──────────────── Fallback Note ──────────────── */
 .menu-note {
   font-style: italic;
   color: #999;
+}
+
+/* ──────────────── Mobile Overrides ──────────────── */
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column;
+    padding: var(--spacing-unit, 0.5rem);
+  }
+
+  .menu-link {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
 }

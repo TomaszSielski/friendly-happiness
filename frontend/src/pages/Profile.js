@@ -25,9 +25,7 @@ const renderBadges = (items) => (
   </div>
 );
 
-CollapsibleClaim.propTypes = {
-  value: PropTypes.any
-};
+
 
 const CollapsibleClaim = ({ value }) => {
   const [expanded, setExpanded] = useState(false);
@@ -46,7 +44,9 @@ const CollapsibleClaim = ({ value }) => {
     </span>
   );
 };
-
+CollapsibleClaim.propTypes = {
+  value: PropTypes.any
+};
 const Profile = () => {
   const { instance } = useMsal();
   const [claims, setClaims] = useState(null);

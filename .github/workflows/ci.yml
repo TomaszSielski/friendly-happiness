@@ -3,8 +3,12 @@ name: CI
 on:
   push:
     branches: [develop, main]
+    paths:
+      - "frontend/**"
   pull_request:
     branches: [develop]
+    paths:
+      - "frontend/**"
 
 jobs:
   build:
@@ -27,6 +31,14 @@ jobs:
         run: npm run build
         working-directory: frontend
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests with coverage
+        run: npm test -- --ci --bail --coverage
         working-directory: frontend
+        continue-on-error: false
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: frontend/coverage

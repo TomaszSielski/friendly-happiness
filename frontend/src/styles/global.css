@@ -1,22 +1,49 @@
 /* styles/global.css */
-/* Global Styles with Light and Dark Mode Support */
+/**
+ * @file global.css
+ * @description Global theme variables with light/dark mode support and layout consistency.
+ *
+ * @responsibilities
+ * - Defines semantic color, typography, and layout tokens
+ * - Supports light and dark modes via `prefers-color-scheme`
+ * - Centralizes spacing, radius, and transition values for maintainability
+ *
+ * @usage
+ * - Imported at root level to apply global styles across all components
+ * - Variables consumed by layout, button, header, and role-based UI modules
+ *
+ * @auditTag global-theme-v1
+ * @lastReviewed 2025-10-28
+ */
 
 :root {
+  /* Layout Tokens */
+  --spacing-unit: 1rem;
+  --gap-unit: 10px;
+  --border-radius: 4px;
+  --transition-speed: 0.2s;
+
+  /* Typography */
+  --font-family: "Montserrat", "Segoe UI", "Helvetica Neue", sans-serif;
+
+  /* Colors: Light Mode Defaults */
   --main-bg: linear-gradient(to right, #f0f0f0, #ffffff);
   --main-text: #1a1a1a;
-  --accent: #0078d4;
-  --hover-text: #000000;
   --header-text: #1a1a1a;
+  --hover-text: #000000;
   --active-text: #000000;
-  --font-family: "Montserrat", sans-serif;
+  --accent: #0078d4;
 }
 
-/* Light mode override (optional for clarity) */
+/* Light mode override (redundant but explicit for audit clarity) */
 @media (prefers-color-scheme: light) {
   :root {
     --main-bg: linear-gradient(to right, #f0f0f0, #ffffff);
     --main-text: #1a1a1a;
     --accent: #0078d4;
+    --hover-text: #000000;
+    --header-text: #1a1a1a;
+    --active-text: #000000;
   }
 }
 

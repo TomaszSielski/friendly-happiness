@@ -1,18 +1,48 @@
-// frontend/src/layout/MainLayout.js
+/**
+ * @file MainLayout.js
+ * @component MainLayout
+ * @description Auth-aware layout wrapper with header, footer, and role display.
+ *
+ * @responsibilities
+ * - Wraps app content with consistent layout and styling
+ * - Displays user identity and roles from MSAL
+ * - Passes normalized roles to Header for role-based nav
+ * - Logs layout and account info for audit/debug
+ *
+ * @styles
+ * - Defined in `frontend/src/styles/mainLayout.css`
+ * - Uses `.layout-wrapper`, `.layout-meta`, `.layout-content`
+ *
+ * @auditTag layout-main-v1
+ * @lastReviewed 2025-10-28
+ */
+
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useMsal } from "@azure/msal-react";
 import { devLog } from "../utils/logger";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/mainLayout.css";
-import React from 'react';
-import PropTypes from 'prop-types';
-
 
 const MainLayout = ({ roles, children }) => {
   const { instance } = useMsal();
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  const normalizedRoles = roles.map((r) => r.toLowerCase());
   const accounts = instance.getAllAccounts();
   const account = accounts.length > 0 ? accounts[0] : null;
   const displayName = account?.name || account?.username || "User";
+
+  const handleLogout = () => {
+    devLog("info", `[MainLayout] Logging out user: ${displayName}`);
+    setLoggingOut(true);
+
+    // Delay redirect to allow UI update
+    setTimeout(() => {
+      instance.logoutRedirect();
+    }, 100); // 100ms is enough for React to flush
+  };
 
   if (!account) {
     devLog("warn", "[MainLayout] No MSAL account detected.");
@@ -25,18 +55,31 @@ const MainLayout = ({ roles, children }) => {
 
   return (
     <div className="layout-wrapper">
-      <Header roles={roles} />
-      <div className="layout-meta">
-        <span>Welcome, {displayName}</span>
-        <p>Roles: {roles.join(", ") || "None"}</p>
+      <Header roles={roles} onLogout={handleLogout} />
+      <div className="layout-meta" data-audit="layout-meta">
+        {loggingOut ? (
+          <span data-audit="user-leaving">Logging out…</span>
+        ) : (
+          <span data-audit="user-display-name">Welcome, {displayName}</span>
+        )}
+        <p data-audit="user-roles">
+          Roles:{" "}
+          {normalizedRoles.length > 0 ? normalizedRoles.join(", ") : "None"}
+        </p>
       </div>
       <main className="layout-content">{children}</main>
       <Footer />
     </div>
   );
 };
+
+MainLayout.defaultProps = {
+  roles: [],
+};
+
 MainLayout.propTypes = {
   children: PropTypes.node,
-  roles: PropTypes.arrayOf(PropTypes.string)
+  roles: PropTypes.arrayOf(PropTypes.string),
 };
+
 export default MainLayout;
