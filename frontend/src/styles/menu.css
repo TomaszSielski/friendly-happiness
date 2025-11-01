@@ -1,29 +1,43 @@
-/* /frontend/src/styles/menu.css */
-@media (max-width: 768px) {
-  .menu {
-    flex-direction: column;
-    padding: var(--spacing-unit, 0.5rem);
-  }
+/**
+ * @file menu.css
+ * @description Styles for role-aware navigation menu with responsive layout and link variants.
+ *
+ * @responsibilities
+ * - Styles menu container and navigation links
+ * - Applies global theme tokens for spacing, color, and typography
+ * - Supports mobile layout and role-specific link styling
+ *
+ * @tokens
+ * - Uses `--main-bg`, `--main-text`, `--accent`, `--font-family`, `--spacing-unit`, `--role-admin-text`, `--role-user-text`
+ *
+ * @auditTag layout-menu-css-v1
+ * @lastReviewed 2025-11-01
+ */
 
-  .menu-link {
-    font-size: 1rem;
-    padding: 0.5rem 0;
-  }
-}
-
+/* ──────────────── Menu Container ──────────────── */
 .menu {
-  padding: var(--spacing-unit, 1rem);
-  background-color: var(--main-bg);
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  font-family: var(--font-family);
+
+  /* Layout */
+  gap: var(--gap-unit, 10px);
+  padding: var(--spacing-unit, 1rem);
+
+  /* Visual */
+  background-color: var(--main-bg);
   color: var(--main-text);
+
+  /* Typography */
+  font-family: var(--font-family);
 }
 
+/* ──────────────── Menu Links ──────────────── */
 .menu-link {
   text-decoration: none;
   color: var(--main-text);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
 }
 
 .menu-link:hover {
@@ -37,12 +51,33 @@
   border-bottom: 2px solid var(--accent);
 }
 
-.admin-link {
-  color: #d83b01;
+/* ──────────────── Role-Specific Link Styling ──────────────── */
+.menu-link[data-role="admin"] {
+  color: var(--role-admin-text, #d83b01);
   font-weight: bold;
 }
 
+.menu-link[data-role="user"] {
+  color: var(--role-user-text, #003366);
+}
+
+/* ──────────────── Fallback Note ──────────────── */
 .menu-note {
   font-style: italic;
   color: #999;
+  font-size: 0.9rem;
+}
+
+/* ──────────────── Mobile Overrides ──────────────── */
+/* @auditTag layout-menu-mobile-v1 */
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column;
+    padding: var(--spacing-unit, 0.5rem);
+  }
+
+  .menu-link {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
 }

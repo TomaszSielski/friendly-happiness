@@ -78,3 +78,28 @@ Gracefully handle consent prompts and fallback logic
 [ ] Add dark/light mode toggle to settings menu
 Default to browser preference via `prefers-color-scheme`
 Allow manual override via `data-theme` attribute
+# package.json
+
+@description Project manifest for the Friendly Happiness frontend React application.
+
+@responsibilities
+- Declares runtime and development dependencies
+- Defines build/test/start scripts for local and CI environments
+- Specifies browser compatibility targets
+
+@behavior
+- Uses MSAL for authentication (`@azure/msal-browser`, `@azure/msal-react`)
+- React 19 with React Router v7 for routing
+- ESLint setup for code quality enforcement
+
+@integration
+- Used by Node.js and npm for dependency resolution
+- Interacts with Webpack via `react-scripts`
+
+@auditTag package-json-v1
+@lastReviewed 2025-11-01
+
+@todo
+- Add `homepage` field for deployment context (e.g. GitHub Pages or Netlify)
+- Consider pinning exact versions for production stability
+- Add `description`, `repository`, and `license` fields for metadata completeness

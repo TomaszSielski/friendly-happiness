@@ -1,18 +1,41 @@
-/* src/styles/header.css */
+/**
+ * @file header.css
+ * @description Styles for responsive, role-aware header with navigation and branding.
+ *
+ * @responsibilities
+ * - Styles header layout, logo, title, and navigation menu
+ * - Applies global theme tokens for spacing, typography, and color
+ * - Supports mobile menu toggling and role-based button styling
+ *
+ * @tokens
+ * - Uses `--main-bg`, `--main-text`, `--header-text`, `--font-family`, `--highlight`
+ *
+ * @auditTag layout-header-css-v1
+ * @auditFix nav-button-mobile-overlap-v1
+ * @lastReviewed 2025-10-28
+ */
+
+/* ──────────────── Header Wrapper ──────────────── */
 .app-header {
+  /* Visual */
   background-color: var(--main-bg);
-  padding: 0.75rem 1.5rem;
   border-bottom: 1px solid #333;
-  font-family: var(--font-family);
   color: var(--header-text);
+
+  /* Spacing */
+  padding: 0.75rem 1.5rem;
+
+  /* Typography */
+  font-family: var(--font-family);
 }
 
+/* ──────────────── Header Content ──────────────── */
 .header-content {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .logo {
@@ -26,34 +49,68 @@
   color: var(--main-text);
 }
 
+/* ──────────────── Hamburger Toggle ──────────────── */
 .hamburger {
   display: none;
   font-size: 1.8rem;
+
+  /* Visual */
   background: none;
   border: none;
   color: var(--main-text);
+
+  /* Interaction */
   cursor: pointer;
 }
 
+/* ──────────────── Navigation Menu ──────────────── */
 .nav-menu {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
-  flex-wrap: wrap;
+
+  /* Spacing */
   padding: 1rem 0;
 }
 
+/* ──────────────── Navigation Buttons ──────────────── */
 .nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Visual */
   background-color: transparent;
-  color: var(--main-text);
   border: 1px solid var(--main-text);
-  padding: 0.6rem 1.2rem;
   border-radius: 6px;
+  color: var(--main-text);
   text-decoration: none;
+
+  /* Typography */
+  font-family: var(--font-family);
+  font-size: 1rem;
   font-weight: 500;
+
+  /* Spacing */
+  padding: 0.6rem 1.2rem;
+
+  /* Interaction */
   transition: all 0.2s ease-in-out;
 }
+.nav-button[data-role="admin"] {
+  border-color: var(--role-admin-text, #5a2d0c);
+  color: var(--role-admin-text, #5a2d0c);
+}
 
+.nav-button[data-role="user"] {
+  border-color: var(--role-user-text, #003366);
+  color: var(--role-user-text, #003366);
+}
 .nav-button:hover {
   background-color: var(--main-text);
   color: var(--main-bg);
@@ -64,10 +121,18 @@
   color: var(--main-bg);
 }
 
-/* Mobile */
+.nav-button:focus {
+  outline: none;
+}
+
+/* ──────────────── Mobile Overrides ──────────────── */
+/* @auditTag layout-header-mobile-v1 */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
+  }
+  .hamburger[aria-expanded="true"] {
+    background-color: var(--highlight);
   }
 
   .nav-menu {
@@ -78,5 +143,16 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    padding: var(--spacing-unit, 1rem);
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .nav-menu.open .nav-button {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    text-align: left;
   }
 }
