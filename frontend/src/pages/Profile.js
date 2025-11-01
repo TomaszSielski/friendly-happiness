@@ -1,12 +1,11 @@
-// src/pages/Profile.js
 import { useMsal } from "@azure/msal-react";
 import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import { useEffect, useState } from "react";
 import "../styles/profile.css";
 import { devLog } from "../utils/logger";
-import React from 'react';
-import PropTypes from 'prop-types';
-
+import React from "react";
+import PropTypes from "prop-types";
+import { KNOWN_ROLES } from "../config/roles.config";
 
 const timestampsKeys = ["iat", "exp", "nbf", "auth_time"];
 
@@ -24,8 +23,6 @@ const renderBadges = (items) => (
     ))}
   </div>
 );
-
-
 
 const CollapsibleClaim = ({ value }) => {
   const [expanded, setExpanded] = useState(false);
@@ -45,11 +42,13 @@ const CollapsibleClaim = ({ value }) => {
   );
 };
 CollapsibleClaim.propTypes = {
-  value: PropTypes.any
+  value: PropTypes.any,
 };
+
 const Profile = () => {
   const { instance } = useMsal();
   const [claims, setClaims] = useState(null);
+  const [resolvedRole, setResolvedRole] = useState("guest");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -63,21 +62,35 @@ const Profile = () => {
         return;
       }
 
+      const handleDecoded = (decoded, source) => {
+        devLog("info", `[Profile] Claims loaded (${source}):`, decoded);
+        if (decoded?.exp) {
+          devLog(
+            "info",
+            `[Profile] Token expires at (${source}):`,
+            formatTimestamp(decoded.exp)
+          );
+        }
+
+        const normalizedRoles =
+          decoded?.roles?.map((r) => r.toLowerCase()) || [];
+        const role =
+          normalizedRoles.find((r) => KNOWN_ROLES.includes(r)) || "user";
+
+        devLog("debug", "[Profile] Normalized roles:", normalizedRoles);
+        devLog("debug", "[Profile] Resolved role:", role);
+
+        setResolvedRole(role);
+        setClaims(decoded);
+      };
+
       try {
         const response = await instance.acquireTokenSilent({
           account,
           scopes: ["User.Read"],
         });
         const decoded = parseJwt(response.idToken);
-        devLog("info", "[Profile] Claims loaded:", decoded);
-        if (decoded?.exp) {
-          devLog(
-            "info",
-            "[Profile] Token expires at:",
-            formatTimestamp(decoded.exp)
-          );
-        }
-        setClaims(decoded);
+        handleDecoded(decoded, "silent");
       } catch (error) {
         if (error instanceof InteractionRequiredAuthError) {
           try {
@@ -86,15 +99,7 @@ const Profile = () => {
               scopes: ["User.Read"],
             });
             const decoded = parseJwt(response.idToken);
-            devLog("info", "[Profile] Claims loaded (popup):", decoded);
-            if (decoded?.exp) {
-              devLog(
-                "info",
-                "[Profile] Token expires at (popup):",
-                formatTimestamp(decoded.exp)
-              );
-            }
-            setClaims(decoded);
+            handleDecoded(decoded, "popup");
           } catch (popupError) {
             devLog(
               "error",
@@ -125,7 +130,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="profile">
+    <div className="profile" data-role={resolvedRole}>
       <h2>Profile</h2>
       <p>Detailed identity and token metadata.</p>
 

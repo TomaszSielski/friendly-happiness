@@ -1,23 +1,48 @@
-/* Home Page Styles */
+/**
+ * @file home.css
+ * @description Styles for home page layout, logo, welcome message, and login button.
+ *
+ * @responsibilities
+ * - Styles home wrapper and content with global theme tokens
+ * - Supports dark mode and responsive logo sizing
+ * - Applies consistent button styling and semantic spacing
+ *
+ * @tokens
+ * - Uses `--main-bg`, `--main-text`, `--hover-text`, `--header-text`, `--font-family`, `--spacing-unit`
+ *
+ * @auditTag layout-home-css-v1
+ * @lastReviewed 2025-11-01
+ */
+
+/* ──────────────── Home Wrapper ──────────────── */
 .home-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  /* Layout */
   min-height: 100vh;
+  padding: var(--spacing-unit, 2rem);
+  text-align: center;
+
+  /* Visual */
   background: var(--main-bg);
   color: var(--main-text);
+
+  /* Typography */
   font-family: var(--font-family);
-  text-align: center;
-  padding: var(--spacing-unit, 2rem);
 }
 
+/* ──────────────── Dark Mode Override ──────────────── */
+/* @auditTag layout-home-dark-v1 */
 @media (prefers-color-scheme: dark) {
   .home-wrapper {
     background: linear-gradient(to right, #1a1a1a, #000000);
   }
 }
 
+/* ──────────────── Home Content ──────────────── */
 .home-content h1 {
   font-size: 2rem;
   margin-bottom: var(--spacing-unit, 1rem);
@@ -32,13 +57,21 @@
   margin-bottom: var(--spacing-unit, 1rem);
 }
 
+/* ──────────────── Login Button ──────────────── */
 .login-button {
   background-color: transparent;
   color: var(--hover-text);
   border: 1px solid var(--main-text);
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
   border-radius: 4px;
+
+  /* Typography */
+  font-size: 1rem;
+  font-family: var(--font-family);
+
+  /* Spacing */
+  padding: 0.5rem 1rem;
+
+  /* Interaction */
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
@@ -48,18 +81,22 @@
   color: var(--header-text);
 }
 
+/* ──────────────── Footer Note ──────────────── */
 .home-footer {
   margin-top: 2rem;
   font-size: 0.85rem;
   color: #666;
 }
 
+/* ──────────────── Logo ──────────────── */
 .home-logo {
   height: 60px;
   width: auto;
   margin-bottom: var(--spacing-unit, 1rem);
 }
 
+/* ──────────────── Mobile Overrides ──────────────── */
+/* @auditTag layout-home-mobile-v1 */
 @media (max-width: 768px) {
   .home-logo {
     height: 48px;

@@ -8,10 +8,10 @@
  * - Supports mobile layout and role-specific link styling
  *
  * @tokens
- * - Uses `--main-bg`, `--main-text`, `--accent`, `--font-family`, `--spacing-unit`
+ * - Uses `--main-bg`, `--main-text`, `--accent`, `--font-family`, `--spacing-unit`, `--role-admin-text`, `--role-user-text`
  *
  * @auditTag layout-menu-css-v1
- * @lastReviewed 2025-10-28
+ * @lastReviewed 2025-11-01
  */
 
 /* ──────────────── Menu Container ──────────────── */
@@ -20,7 +20,7 @@
   flex-wrap: wrap;
 
   /* Layout */
-  gap: 10px;
+  gap: var(--gap-unit, 10px);
   padding: var(--spacing-unit, 1rem);
 
   /* Visual */
@@ -35,6 +35,9 @@
 .menu-link {
   text-decoration: none;
   color: var(--main-text);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
 }
 
 .menu-link:hover {
@@ -48,19 +51,25 @@
   border-bottom: 2px solid var(--accent);
 }
 
-/* ──────────────── Role-Specific Link ──────────────── */
-.admin-link {
-  color: #d83b01;
+/* ──────────────── Role-Specific Link Styling ──────────────── */
+.menu-link[data-role="admin"] {
+  color: var(--role-admin-text, #d83b01);
   font-weight: bold;
+}
+
+.menu-link[data-role="user"] {
+  color: var(--role-user-text, #003366);
 }
 
 /* ──────────────── Fallback Note ──────────────── */
 .menu-note {
   font-style: italic;
   color: #999;
+  font-size: 0.9rem;
 }
 
 /* ──────────────── Mobile Overrides ──────────────── */
+/* @auditTag layout-menu-mobile-v1 */
 @media (max-width: 768px) {
   .menu {
     flex-direction: column;

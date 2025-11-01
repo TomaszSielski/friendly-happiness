@@ -15,6 +15,12 @@
  * @auditTag global-theme-v1
  * @lastReviewed 2025-10-28
  */
+body {
+  background: var(--main-bg);
+  color: var(--main-text);
+  font-family: var(--font-family);
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
 :root {
   /* Layout Tokens */
@@ -33,9 +39,58 @@
   --hover-text: #000000;
   --active-text: #000000;
   --accent: #0078d4;
+  /* Manual Light Theme */
+  body[data-theme="light"] {
+    --main-bg: linear-gradient(to right, #f0f0f0, #ffffff);
+    --main-text: #1a1a1a;
+    --accent: #0078d4;
+    --hover-text: #000000;
+    --header-text: #1a1a1a;
+    --active-text: #000000;
+    --role-user-bg: #e5f7ff;
+    --role-user-text: #003366;
+    --role-admin-bg: #fff4e5;
+    --role-admin-text: #5a2d0c;
+    --role-guest-bg: #f9f9f9;
+    --role-guest-text: #333333;
+  }
+
+  /* Manual Dark Theme */
+  body[data-theme="dark"] {
+    --main-bg: linear-gradient(to right, #1a1a1a, #000000);
+    --main-text: #e0dcb3;
+    --accent: #ffd700;
+    --hover-text: #ffffff;
+    --header-text: #000000;
+    --active-text: #ffffff;
+    --role-user-bg: #1a2b3f;
+    --role-user-text: #cceeff;
+    --role-admin-bg: #3f2a1a;
+    --role-admin-text: #ffe0b3;
+    --role-guest-bg: #2a2a2a;
+    --role-guest-text: #dddddd;
+  }
+  /* Role-Based Text Colors */
+  --role-admin-text: #5a2d0c; /* dark brown for light admin background */
+  --role-user-text: #003366; /* deep blue for light user background */
+  --role-guest-text: #333333; /* soft black for readability */
+  /* Utility: Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+  /* Utility: Z-Index */
+  --z-index-base: 1;
+  --z-index-dropdown: 100;
+  --z-index-modal: 1000;
+  --z-index-toast: 1100;
+
+  /* Contrast-Aware Text */
+  --text-on-light: #1a1a1a;
+  --text-on-dark: #ffffff;
 }
 
-/* Light mode override (redundant but explicit for audit clarity) */
+/* @auditTag theme-light-v1 */
 @media (prefers-color-scheme: light) {
   :root {
     --main-bg: linear-gradient(to right, #f0f0f0, #ffffff);
@@ -47,7 +102,7 @@
   }
 }
 
-/* Dark mode override */
+/* @auditTag theme-dark-v1 */
 @media (prefers-color-scheme: dark) {
   :root {
     --main-bg: linear-gradient(to right, #1a1a1a, #000000);

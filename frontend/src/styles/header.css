@@ -102,7 +102,15 @@
   /* Interaction */
   transition: all 0.2s ease-in-out;
 }
+.nav-button[data-role="admin"] {
+  border-color: var(--role-admin-text, #5a2d0c);
+  color: var(--role-admin-text, #5a2d0c);
+}
 
+.nav-button[data-role="user"] {
+  border-color: var(--role-user-text, #003366);
+  color: var(--role-user-text, #003366);
+}
 .nav-button:hover {
   background-color: var(--main-text);
   color: var(--main-bg);
@@ -118,9 +126,13 @@
 }
 
 /* ──────────────── Mobile Overrides ──────────────── */
+/* @auditTag layout-header-mobile-v1 */
 @media (max-width: 768px) {
   .hamburger {
     display: block;
+  }
+  .hamburger[aria-expanded="true"] {
+    background-color: var(--highlight);
   }
 
   .nav-menu {

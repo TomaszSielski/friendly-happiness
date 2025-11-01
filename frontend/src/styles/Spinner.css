@@ -1,29 +1,58 @@
-/* Spinner.css */
+/**
+ * @file spinner.css
+ * @description Styles for loading spinner component with theme-aware visuals and accessibility support.
+ *
+ * @responsibilities
+ * - Centers spinner vertically and horizontally
+ * - Applies global theme tokens for background, color, and typography
+ * - Supports motion clarity and message styling
+ *
+ * @tokens
+ * - Uses `--main-bg`, `--main-text`, `--font-family`, `--spacing-unit`
+ *
+ * @auditTag layout-spinner-css-v1
+ * @lastReviewed 2025-11-01
+ */
+
+/* ──────────────── Spinner Container ──────────────── */
 .spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+
+  /* Layout */
   height: 100vh;
+  padding: var(--spacing-unit, 1rem);
+
+  /* Visual */
   background: var(--main-bg);
 }
 
+/* ──────────────── Spinner Element ──────────────── */
 .spinner {
   width: 50px;
   height: 50px;
-  border: 6px solid #333;
+  border: 6px solid var(--border-color, #333);
   border-top: 6px solid var(--main-text);
   border-radius: 50%;
+
+  /* Motion */
   animation: spin 1s linear infinite;
 }
 
+/* ──────────────── Spinner Message ──────────────── */
 .spinner-message {
+  margin-top: var(--spacing-unit, 1rem);
   text-align: center;
-  margin-top: 1rem;
-  color: var(--main-text);
+
+  /* Typography */
   font-size: 1rem;
   font-family: var(--font-family);
+  color: var(--main-text);
 }
 
+/* ──────────────── Spinner Animation ──────────────── */
 @keyframes spin {
   to {
     transform: rotate(360deg);

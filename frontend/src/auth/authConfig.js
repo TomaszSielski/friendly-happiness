@@ -12,22 +12,21 @@
  * - Log initialization details for audit/debug purposes
  *
  * @behavior
- * - Dynamically selects redirect URI based on current hostname
+ * - Loads redirect URIs from environment variables
+ * - Throws or logs errors if required variables are missing
  * - Logs selected redirect URI using devLog
  *
  * @auditTag auth-config-v1
- * @lastReviewed 2025-10-27
+ * @lastReviewed 2025-11-01
  */
 
 import { devLog } from "../utils/logger";
 
-const hostname = window.location.hostname;
-let redirectUri = "https://localhost:3000/auth/login";
-let postLogoutRedirectUri = "https://localhost:3000/";
-
-if (hostname.includes("netlify.app")) {
-  redirectUri = "https://stunning-phoenix-a34b0a.netlify.app/auth/login";
-  postLogoutRedirectUri = "https://stunning-phoenix-a34b0a.netlify.app/";
+const redirectUri = process.env.REACT_APP_REDIRECT_URI;
+const postLogoutRedirectUri = process.env.REACT_APP_POST_LOGOUT_URI;
+if (!redirectUri || !postLogoutRedirectUri) {
+  devLog("error", "[authConfig] Missing redirect URIs in environment.");
+  throw new Error("[authConfig] Missing required MSAL environment variables.");
 }
 if (!process.env.REACT_APP_CLIENT_ID || !process.env.REACT_APP_TENANT_ID) {
   devLog("error", "[authConfig] Missing MSAL env variables.");
@@ -35,7 +34,7 @@ if (!process.env.REACT_APP_CLIENT_ID || !process.env.REACT_APP_TENANT_ID) {
 export const msalConfig = {
   auth: {
     clientId: process.env.REACT_APP_CLIENT_ID,
-    authority: `https://login.microsoftonline.com/${process.env.REACT_APP_TENANT_ID}`,
+    authority: process.env.REACT_APP_AUTHORITY,
     redirectUri,
     postLogoutRedirectUri,
   },

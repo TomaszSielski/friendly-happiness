@@ -1,4 +1,30 @@
 <!DOCTYPE html>
+<!--
+  @file index.html
+  @description Root HTML template for the Friendly Happiness React application.
+
+  @responsibilities
+  - Defines document metadata for SEO and accessibility
+  - Provides root container for React app mounting
+  - Includes favicon and theme color for branding
+
+  @behavior
+  - React app is injected into the #root div at runtime
+  - Metadata supports responsive layout and search engine indexing
+
+  @integration
+  - Used by Webpack/React build system
+  - Loads assets from /public (e.g., favicon, logo)
+
+  @auditTag html-root-v1
+  @lastReviewed 2025-11-01
+
+  @todo
+  - Add dynamic title and meta tags via React Helmet
+  - Consider PWA enhancements (manifest, service worker)
+  - Preload critical assets for performance optimization
+-->
+
 <html lang="en">
   <head>
     <meta charset="UTF-8" />

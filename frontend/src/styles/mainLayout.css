@@ -27,6 +27,18 @@
   /* Typography */
   font-family: var(--font-family);
 }
+.layout-wrapper.user {
+  background: var(--role-user-bg);
+  color: var(--role-user-text);
+}
+.layout-wrapper.admin {
+  background: var(--role-admin-bg);
+  color: var(--role-admin-text);
+}
+.layout-wrapper.guest {
+  background: var(--role-guest-bg);
+  color: var(--role-guest-text);
+}
 
 /* ──────────────── Role Metadata Block ──────────────── */
 .layout-meta {
@@ -55,6 +67,7 @@
 }
 
 /* ──────────────── Mobile Overrides ──────────────── */
+/* @auditTag layout-main-mobile-v1 */
 @media (max-width: 600px) {
   .layout-wrapper {
     font-size: 0.95rem;

@@ -10,8 +10,8 @@
  * - Logs role and state data for audit/debug purposes
  *
  * @behavior
- * - Shows Dashboard/Profile links for "users" and "admins"
- * - Shows Admin Panel for "admins" only
+ * - Shows Dashboard/Profile links for all authenticated roles except "guest"
+ * - Shows Admin Panel for "admin" only
  * - Shows Logout if any role is present
  * - Normalizes role strings for case-insensitive matching
  *
@@ -23,25 +23,31 @@
  * - Inherits `--main-bg`, `--main-text`, `--font-family`, `--spacing-unit`
  *
  * @auditTag layout-menu-v1
- * @lastReviewed 2025-10-28
+ * @lastReviewed 2025-11-01
  */
 
 import React from "react";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { devLog } from "../utils/logger";
+import { KNOWN_ROLES } from "../config/roles.config";
 import "../styles/menu.css";
 
 const Menu = ({ roles = [], isOpen = true }) => {
-  devLog("debug", "[Menu] Roles received:", roles);
-  devLog("debug", "[Menu] isOpen state:", isOpen);
-
   const normalizedRoles = roles.map((r) => r.toLowerCase());
   const hasRole = (role) => normalizedRoles.includes(role);
 
+  devLog("debug", "[Menu] Roles received:", roles);
+  devLog("debug", "[Menu] Normalized roles:", normalizedRoles);
+  devLog("debug", "[Menu] isOpen state:", isOpen);
+
+  const isAuthenticated = normalizedRoles.some(
+    (r) => KNOWN_ROLES.includes(r) && r !== "guest"
+  );
+
   return (
     <nav className={`menu ${isOpen ? "open" : ""}`} data-audit="menu-wrapper">
-      {roles.length === 0 && (
+      {!isAuthenticated && (
         <>
           <NavLink to="/" className="menu-link" data-audit="menu-home">
             Home
@@ -52,7 +58,7 @@ const Menu = ({ roles = [], isOpen = true }) => {
         </>
       )}
 
-      {(hasRole("users") || hasRole("admins")) && (
+      {isAuthenticated && (
         <>
           <NavLink
             to="/dashboard"
@@ -68,10 +74,17 @@ const Menu = ({ roles = [], isOpen = true }) => {
           >
             Profile
           </NavLink>
+          <NavLink
+            to="/settings"
+            className="menu-link"
+            data-audit="menu-settings"
+          >
+            Settings
+          </NavLink>
         </>
       )}
 
-      {hasRole("admins") && (
+      {hasRole("admin") && (
         <NavLink
           to="/admin"
           className="menu-link admin-link"
@@ -81,7 +94,7 @@ const Menu = ({ roles = [], isOpen = true }) => {
         </NavLink>
       )}
 
-      {roles.length > 0 && (
+      {isAuthenticated && (
         <NavLink
           to="/auth/logout"
           className="menu-link"

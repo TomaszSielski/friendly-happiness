@@ -5,17 +5,22 @@
  * @responsibilities
  * - Defines consistent button appearance and interaction behavior
  * - Applies global theme tokens for color, spacing, and typography
- * - Supports hover and disabled states for audit clarity
+ * - Supports hover, focus, and disabled states for audit clarity
+ * - Enables role-based styling via `data-role`
  *
  * @tokens
- * - Uses `--main-text`, `--main-bg`, `--font-family`, `--spacing-unit`
+ * - Uses `--main-text`, `--main-bg`, `--font-family`, `--spacing-unit`, `--role-admin-text`, `--role-user-text`
  *
  * @auditTag layout-buttons-css-v1
- * @lastReviewed 2025-10-28
+ * @lastReviewed 2025-11-01
  */
 
 /* ──────────────── Base Button ──────────────── */
 button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   /* Visual */
   background-color: transparent;
   border: 1px solid var(--main-text);
@@ -25,6 +30,7 @@ button {
   /* Typography */
   font-family: var(--font-family);
   font-size: 1rem;
+  font-weight: 500;
 
   /* Spacing */
   padding: 0.5rem 1rem;
@@ -40,8 +46,29 @@ button:hover {
   color: var(--main-bg);
 }
 
+/* ──────────────── Focus State ──────────────── */
+button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ──────────────── Disabled State ──────────────── */
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ──────────────── Role-Based Styling ──────────────── */
+button[data-role="admin"] {
+  border-color: var(--role-admin-text, #d83b01);
+  color: var(--role-admin-text, #d83b01);
+}
+
+button[data-role="user"] {
+  border-color: var(--role-user-text, #003366);
+  color: var(--role-user-text, #003366);
+}
+button[data-role="guest"] {
+  border-color: var(--role-guest-text, #666666);
+  color: var(--role-guest-text, #666666);
 }

@@ -1,1 +1,15 @@
+# _redirects
+# @description Redirects all unmatched routes to index.html for client-side routing in a single-page React app.
+#
+# @behavior
+# - Ensures React Router handles navigation instead of the server returning 404s
+# - Required for proper routing on static hosts like Netlify
+#
+# @auditTag redirects-v1
+# @lastReviewed 2025-11-01
+#
+# @todo
+# - Confirm compatibility with hosting provider (e.g. Netlify, Vercel, GitHub Pages)
+# - Add additional route-specific redirects if needed (e.g. legacy paths)
+
 /*    /index.html   200

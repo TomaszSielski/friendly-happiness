@@ -1,14 +1,15 @@
-// src/pages/Dashboard.js
 import { useMsal } from "@azure/msal-react";
 import { InteractionRequiredAuthError } from "@azure/msal-browser";
 import { useEffect, useState } from "react";
 import "../styles/dashboard.css";
 import { devLog } from "../utils/logger";
-import React from 'react';
+import React from "react";
+import { KNOWN_ROLES } from "../config/roles.config";
 
 const Dashboard = () => {
   const { instance } = useMsal();
   const [claims, setClaims] = useState(null);
+  const [resolvedRole, setResolvedRole] = useState("guest");
   const [loading, setLoading] = useState(true);
 
   const formatTimestamp = (value) => {
@@ -45,6 +46,16 @@ const Dashboard = () => {
             formatTimestamp(decoded.exp)
           );
         }
+
+        const normalizedRoles =
+          decoded?.roles?.map((r) => r.toLowerCase()) || [];
+        const role =
+          normalizedRoles.find((r) => KNOWN_ROLES.includes(r)) || "user";
+
+        devLog("debug", "[Dashboard] Normalized roles:", normalizedRoles);
+        devLog("debug", "[Dashboard] Resolved role:", role);
+
+        setResolvedRole(role);
         setClaims(decoded);
       } catch (error) {
         if (error instanceof InteractionRequiredAuthError) {
@@ -69,6 +80,20 @@ const Dashboard = () => {
                 formatTimestamp(decoded.exp)
               );
             }
+
+            const normalizedRoles =
+              decoded?.roles?.map((r) => r.toLowerCase()) || [];
+            const role =
+              normalizedRoles.find((r) => KNOWN_ROLES.includes(r)) || "user";
+
+            devLog(
+              "debug",
+              "[Dashboard] Normalized roles (popup):",
+              normalizedRoles
+            );
+            devLog("debug", "[Dashboard] Resolved role (popup):", role);
+
+            setResolvedRole(role);
             setClaims(decoded);
           } catch (popupError) {
             devLog(
@@ -103,7 +128,7 @@ const Dashboard = () => {
   );
 
   return (
-    <div className="dashboard">
+    <div className="dashboard" data-role={resolvedRole}>
       <h2>Dashboard</h2>
       <p>Overview of your activities and statistics.</p>
 

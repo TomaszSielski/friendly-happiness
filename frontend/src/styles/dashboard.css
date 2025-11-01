@@ -1,11 +1,31 @@
-/* Dashboard Styles */
+/**
+ * @file dashboard.css
+ * @description Styles for dashboard claims, badges, and summary blocks with theme and role awareness.
+ *
+ * @responsibilities
+ * - Styles claims list and badge containers
+ * - Applies global theme tokens for background, color, spacing, and typography
+ * - Supports role-based badge styling and responsive readability
+ *
+ * @tokens
+ * - Uses `--main-bg`, `--main-text`, `--font-family`, `--spacing-unit`, `--accent`
+ * - Uses `--badge-bg`, `--badge-text`, `--badge-border`, `--badge-hover`
+ * - Uses `--summary-bg`, `--summary-text`
+ *
+ * @auditTag layout-dashboard-css-v1
+ * @lastReviewed 2025-11-01
+ */
+
+/* ──────────────── Claims Section ──────────────── */
 .claims {
   background-color: var(--main-bg);
   color: var(--main-text);
+  font-family: var(--font-family);
+
+  /* Layout */
   padding: var(--spacing-unit, 1rem);
   border-radius: 8px;
   margin-top: var(--spacing-unit, 1rem);
-  font-family: var(--font-family);
 }
 
 .claims ul {
@@ -14,11 +34,11 @@
 }
 
 .claims li {
-  margin-bottom: 0.5rem;
   font-size: 0.9rem;
+  margin-bottom: 0.5rem;
 }
 
-/* Badge container for roles/groups */
+/* ──────────────── Badge Group ──────────────── */
 .claim-badge-group {
   display: flex;
   flex-wrap: wrap;
@@ -26,41 +46,69 @@
   margin-top: 4px;
 }
 
-/* Individual badge styling */
+/* ──────────────── Individual Badge ──────────────── */
 .claim-badge {
   background-color: var(--badge-bg, #333);
   color: var(--badge-text, #eee);
+  border: 1px solid var(--badge-border, #555);
   border-radius: 12px;
-  padding: 4px 10px;
+
+  /* Typography */
   font-size: 0.85rem;
   font-weight: 500;
-  border: 1px solid var(--badge-border, #555);
+
+  /* Spacing */
+  padding: 4px 10px;
+
+  /* Visual */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
+.claim-badge[data-role="admin"] {
+  background-color: var(--role-admin-bg, #fff4e5);
+  color: var(--role-admin-text, #5a2d0c);
+  border-color: var(--role-admin-text, #5a2d0c);
+}
+
+.claim-badge[data-role="user"] {
+  background-color: var(--role-user-bg, #e5f7ff);
+  color: var(--role-user-text, #003366);
+  border-color: var(--role-user-text, #003366);
+}
 .claim-badge:hover {
   background-color: var(--badge-hover, #555);
   cursor: default;
 }
 
+/* ──────────────── Toggle Control ──────────────── */
 .claim-toggle {
   background: none;
   border: none;
   color: var(--accent, #66f);
   cursor: pointer;
+
+  /* Typography */
   font-size: 0.85rem;
+
+  /* Spacing */
   padding: 0;
   margin-left: 4px;
 }
 
+/* ──────────────── Summary Block ──────────────── */
 .claim-summary {
   background-color: var(--summary-bg, #222);
+  color: var(--summary-text, #ddd);
+
+  /* Layout */
   padding: 0.75rem;
   border-radius: 6px;
   margin-bottom: 1rem;
+
+  /* Typography */
   font-size: 0.9rem;
-  color: var(--summary-text, #ddd);
 }
+
 .claim-summary p {
   margin: 0.25rem 0;
   word-break: break-word;

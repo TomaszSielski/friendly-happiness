@@ -11,8 +11,8 @@
  * - Triggers logout via MSAL redirect when logout button is clicked
  *
  * @behavior
- * - Shows Dashboard/Profile links for "users" and "admins"
- * - Shows Admin Panel for "admins" only
+ * - Shows Dashboard/Profile links for "user", "admin", "editor", "analyst"
+ * - Shows Admin Panel for "admin" only
  * - Shows Logout button if any role is present
  * - Normalizes role strings for case-insensitive matching
  * - Closes menu on navigation to improve UX
@@ -29,12 +29,13 @@
  * - React, react-router-dom, PropTypes
  * - Custom logger from `frontend/src/utils/logger.js`
  * - MSAL authentication via `@azure/msal-react`
+ * - Role config from `roles.config.js`
  *
  * @tokens
  * - Inherits `--main-bg`, `--main-text`, `--font-family`, `--spacing-unit`, `--accent`
  *
  * @auditTag layout-header-v1
- * @lastReviewed 2025-10-28
+ * @lastReviewed 2025-11-01
  */
 
 import React, { useEffect, useState } from "react";
@@ -42,6 +43,7 @@ import { useMsal } from "@azure/msal-react";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { devLog } from "../utils/logger";
+import { KNOWN_ROLES } from "../config/roles.config";
 import "../styles/header.css";
 import logo from "../assets/logo.svg";
 
@@ -61,6 +63,7 @@ const Header = ({ roles = [] }) => {
   useEffect(() => {
     devLog("info", "[Header] Component mounted.");
     devLog("debug", "[Header] Roles passed to Menu:", roles);
+    devLog("debug", "[Header] Normalized roles:", normalizedRoles);
   }, []);
 
   return (
@@ -88,7 +91,10 @@ const Header = ({ roles = [] }) => {
         className={`nav-menu ${menuOpen ? "open" : ""}`}
         data-audit="nav-menu"
       >
-        {(hasRole("users") || hasRole("admins")) && (
+        {/* Shared links for all authenticated roles */}
+        {normalizedRoles.some(
+          (r) => KNOWN_ROLES.includes(r) && r !== "guest"
+        ) && (
           <>
             <NavLink
               to="/dashboard"
@@ -106,9 +112,19 @@ const Header = ({ roles = [] }) => {
             >
               Profile
             </NavLink>
+            <NavLink
+              to="/settings"
+              className="nav-button"
+              onClick={closeMenu}
+              data-audit="nav-settings"
+            >
+              Settings
+            </NavLink>
           </>
         )}
-        {hasRole("admins") && (
+
+        {/* Admin-only link */}
+        {hasRole("admin") && (
           <NavLink
             to="/admin"
             className="nav-button"
@@ -118,7 +134,9 @@ const Header = ({ roles = [] }) => {
             Admin Panel
           </NavLink>
         )}
-        {roles.length > 0 && (
+
+        {/* Logout for any authenticated role */}
+        {normalizedRoles.length > 0 && (
           <button
             onClick={handleLogout}
             className="nav-button"

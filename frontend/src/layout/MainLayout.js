@@ -14,7 +14,7 @@
  * - Uses `.layout-wrapper`, `.layout-meta`, `.layout-content`
  *
  * @auditTag layout-main-v1
- * @lastReviewed 2025-10-28
+ * @lastReviewed 2025-11-01
  */
 
 import React, { useState } from "react";
@@ -24,6 +24,7 @@ import { devLog } from "../utils/logger";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import "../styles/mainLayout.css";
+import { KNOWN_ROLES } from "../config/roles.config";
 
 const MainLayout = ({ roles, children }) => {
   const { instance } = useMsal();
@@ -33,6 +34,11 @@ const MainLayout = ({ roles, children }) => {
   const accounts = instance.getAllAccounts();
   const account = accounts.length > 0 ? accounts[0] : null;
   const displayName = account?.name || account?.username || "User";
+
+  // Determine role for layout styling
+  const role = !account
+    ? "guest"
+    : normalizedRoles.find((r) => KNOWN_ROLES.includes(r)) || "user";
 
   const handleLogout = () => {
     devLog("info", `[MainLayout] Logging out user: ${displayName}`);
@@ -52,9 +58,10 @@ const MainLayout = ({ roles, children }) => {
   devLog("debug", "[MainLayout] Display name:", displayName);
   devLog("debug", "[MainLayout] Roles passed to layout:", roles);
   devLog("debug", "[MainLayout] MSAL account object:", account);
+  devLog("debug", "[MainLayout] Resolved layout role:", role);
 
   return (
-    <div className="layout-wrapper">
+    <div className={`layout-wrapper ${role}`}>
       <Header roles={roles} onLogout={handleLogout} />
       <div className="layout-meta" data-audit="layout-meta">
         {loggingOut ? (
