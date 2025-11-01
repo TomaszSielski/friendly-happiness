@@ -47,7 +47,7 @@ import { KNOWN_ROLES } from "../config/roles.config";
 import "../styles/header.css";
 import logo from "../assets/logo.svg";
 
-const Header = ({ roles = [] }) => {
+const Header = ({ roles = [], onLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const normalizedRoles = roles.map((r) => r.toLowerCase());
   const hasRole = (role) => normalizedRoles.includes(role);
@@ -55,10 +55,6 @@ const Header = ({ roles = [] }) => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
-  const handleLogout = () => {
-    devLog("info", "[Header] Logout triggered by user.");
-    instance.logoutRedirect();
-  };
 
   useEffect(() => {
     devLog("info", "[Header] Component mounted.");
@@ -138,7 +134,7 @@ const Header = ({ roles = [] }) => {
         {/* Logout for any authenticated role */}
         {normalizedRoles.length > 0 && (
           <button
-            onClick={handleLogout}
+            onClick={onLogout}
             className="nav-button"
             type="button"
             data-audit="nav-logout"
