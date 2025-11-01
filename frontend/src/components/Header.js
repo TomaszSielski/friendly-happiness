@@ -39,7 +39,6 @@
  */
 
 import React, { useEffect, useState } from "react";
-import { useMsal } from "@azure/msal-react";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { devLog } from "../utils/logger";
@@ -51,8 +50,6 @@ const Header = ({ roles = [], onLogout }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const normalizedRoles = roles.map((r) => r.toLowerCase());
   const hasRole = (role) => normalizedRoles.includes(role);
-  const { instance } = useMsal();
-
   const toggleMenu = () => setMenuOpen((prev) => !prev);
   const closeMenu = () => setMenuOpen(false);
 
@@ -149,6 +146,7 @@ const Header = ({ roles = [], onLogout }) => {
 
 Header.propTypes = {
   roles: PropTypes.arrayOf(PropTypes.string),
+  onLogout: PropTypes.func,
 };
 
 Header.defaultProps = {

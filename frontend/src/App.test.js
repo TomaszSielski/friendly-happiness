@@ -1,4 +1,5 @@
 /**
+ *
  * @file App.test.js
  * @description Unified test suite for App component covering:
  * - Smoke test to verify render
@@ -10,6 +11,7 @@
  */
 
 import React from "react";
+import PropTypes from "prop-types";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
 import { useMsal } from "@azure/msal-react";
@@ -20,18 +22,36 @@ jest.mock("@azure/msal-react", () => ({
 }));
 
 // Mock AppRoutes and MainLayout to isolate App logic
-jest.mock("./routes/AppRoutes", () => ({ roles }) => (
+const MockAppRoutes = ({ roles }) => (
   <div data-testid="app-routes">Routes for: {roles.join(", ")}</div>
-));
-jest.mock("./layout/MainLayout", () => ({ roles, children }) => (
+);
+MockAppRoutes.displayName = "MockAppRoutes";
+MockAppRoutes.propTypes = {
+  roles: PropTypes.arrayOf(PropTypes.string),
+};
+jest.mock("./routes/AppRoutes", () => MockAppRoutes);
+
+const MockMainLayout = ({ roles, children }) => (
   <div data-testid="main-layout">
     <p>Layout for: {roles.join(", ")}</p>
     {children}
   </div>
-));
-jest.mock("./components/LoadingScreen", () => ({ message }) => (
+);
+MockMainLayout.displayName = "MockMainLayout";
+MockMainLayout.propTypes = {
+  roles: PropTypes.arrayOf(PropTypes.string),
+  children: PropTypes.node,
+};
+jest.mock("./layout/MainLayout", () => MockMainLayout);
+
+const MockLoadingScreen = ({ message }) => (
   <div data-testid="loading-screen">{message}</div>
-));
+);
+MockLoadingScreen.displayName = "MockLoadingScreen";
+MockLoadingScreen.propTypes = {
+  message: PropTypes.string,
+};
+jest.mock("./components/LoadingScreen", () => MockLoadingScreen);
 
 describe("App component", () => {
   test("smoke test: renders without crashing", () => {
@@ -64,7 +84,6 @@ describe("App component", () => {
   });
 
   test("shows loading screen while resolving session", () => {
-    // Simulate delayed MSAL response
     useMsal.mockReturnValue({
       instance: {
         getAllAccounts: () => [],
@@ -74,7 +93,6 @@ describe("App component", () => {
     const { rerender } = render(<App />);
     expect(screen.getByTestId("loading-screen")).toBeInTheDocument();
 
-    // Simulate post-load state
     rerender(<App />);
     expect(screen.getByTestId("app-routes")).toBeInTheDocument();
   });
